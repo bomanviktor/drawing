@@ -1,0 +1,10 @@
+/Users/bao.ta/Gritlab/drawing/target/debug/deps/rustc_serialize-944c660cea5c1c00.rmeta: /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/lib.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/serialize.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/collection_impls.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/base64.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/hex.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/json.rs
+
+/Users/bao.ta/Gritlab/drawing/target/debug/deps/rustc_serialize-944c660cea5c1c00.d: /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/lib.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/serialize.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/collection_impls.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/base64.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/hex.rs /Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/json.rs
+
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/lib.rs:
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/serialize.rs:
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/collection_impls.rs:
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/base64.rs:
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/hex.rs:
+/Users/bao.ta/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rustc-serialize-0.3.24/src/json.rs:

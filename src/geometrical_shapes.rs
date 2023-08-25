@@ -1,55 +1,51 @@
 use rand::Rng;
 pub mod geometrical_shapes {
-    use raster::{Color, Image};
-
     pub trait Drawable {
-        fn draw(&mut self, image: &mut Image);
-        fn color() -> Color;
+        fn draw() {}
+        fn color() {}
     }
 
     pub trait Displayable {
-        fn display(&mut self, x: i32, y: i32, color: Color);
+        fn display() {}
     }
 }
 
 pub struct Point {
-    pub x: i32,
-    pub y: i32
+    x: i32,
+    y: i32,
 }
 
 impl Point {
     pub fn new(x: i32, y: i32) -> Point {
-        Point {
-            x, y
-        }
+        Point { x, y }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Point {
         Point {
             x: rand_num(max_width),
-            y: rand_num(max_height)
+            y: rand_num(max_height),
         }
     }
 }
 
 pub struct Line {
     point_a: Point,
-    point_b: Point
+    point_b: Point,
 }
 
 impl Line {
-// Need to figure out implementation of the referenced "Point"
+    // Need to figure out implementation of the referenced "Point"
     pub fn new(point_a: &Point, point_b: &Point) -> Line {
         Line {
             point_a: Point::new(point_a.x, point_a.y),
-            point_b: Point::new(point_b.x, point_b.y)
+            point_b: Point::new(point_b.x, point_b.y),
         }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Line {
         Line {
             point_a: Point::random(max_width, max_height),
-            point_b: Point::random(max_width, max_height)
+            point_b: Point::random(max_width, max_height),
         }
     }
 }
@@ -57,7 +53,7 @@ impl Line {
 pub struct Triangle {
     point_a: Point,
     point_b: Point,
-    point_c: Point
+    point_c: Point,
 }
 
 impl Triangle {
@@ -65,11 +61,10 @@ impl Triangle {
         Triangle {
             point_a: Point::new(point_a.x, point_a.y),
             point_b: Point::new(point_b.x, point_b.y),
-            point_c: Point::new(point_c.x, point_c.y)
+            point_c: Point::new(point_c.x, point_c.y),
         }
     }
 }
-
 
 /*      EDITORS NOTE:
  *
@@ -93,7 +88,7 @@ pub struct Rectangle {
     point_a: Point,
     point_b: Point,
     point_c: Point,
-    point_d: Point
+    point_d: Point,
 }
 
 impl Rectangle {
@@ -103,34 +98,32 @@ impl Rectangle {
             point_b: Point::new(point_c.x, point_a.y),
             point_c: Point::new(point_c.x, point_c.y),
             point_d: Point::new(point_a.x, point_c.y),
-
         }
     }
 }
 
 pub struct Circle {
     center: Point,
-    radius: i32
+    radius: i32,
 }
 
 impl Circle {
     pub fn new(center: &Point, radius: i32) -> Circle {
         Circle {
             center: Point::new(center.x, center.y),
-            radius
+            radius,
         }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Circle {
         Circle {
             center: Point::random(max_width, max_height),
-            radius: rand_num(max_height)
+            radius: rand_num(max_height),
         }
     }
 }
 
 // generate a tuple with two random numbers in the range of image_width and image_height
-pub(crate) fn rand_num(max_range: i32) -> i32 {
+fn rand_num(max_range: i32) -> i32 {
     rand::thread_rng().gen_range(..=max_range)
 }
-
