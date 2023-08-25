@@ -1,4 +1,5 @@
 use rand::Rng;
+use raster::Color;
 
 pub trait Drawable {
     fn draw(&mut self, image: &mut raster::Image);
@@ -6,9 +7,10 @@ pub trait Drawable {
 }
 
 pub trait Displayable {
-    fn display() {}
+    fn display(&mut self, x: i32, y: i32, color: Color);
 }
 
+#[derive(Copy, Clone)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
