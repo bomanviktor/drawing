@@ -1,14 +1,21 @@
-use super::geometrical_shapes::Drawable;
-use super::{Circle, Line, Point, Rectangle, Triangle};
+use super::geometrical_shapes::{Circle, Drawable, Line, Point, Rectangle, Triangle};
 use raster::Image;
 
 impl Drawable for Point {
     fn draw(&mut self, image: &mut Image) {
         if self.x >= 0 && self.x < image.width && self.y >= 0 && self.y < image.height {
             image
-                .set_pixel(self.x as usize, self.y as usize, raster::Color::default())
+                .set_pixel(
+                    self.x as usize,
+                    self.y as usize,
+                    raster::Color::rgb(255, 255, 255),
+                )
                 .unwrap();
         }
+    }
+
+    fn color(&mut self) {
+        todo!()
     }
 }
 
@@ -31,7 +38,7 @@ impl Drawable for Line {
         loop {
             if x0 >= 0 && x0 < image.width && y0 >= 0 && y0 < image.height {
                 image
-                    .set_pixel(x0 as usize, y0 as usize, raster::Color::default())
+                    .set_pixel(x0 as usize, y0 as usize, raster::Color::rgb(255, 255, 255))
                     .unwrap();
             }
 
@@ -50,26 +57,34 @@ impl Drawable for Line {
             }
         }
     }
+
+    fn color(&mut self) {
+        todo!()
+    }
 }
 
 impl Drawable for Triangle {
     fn draw(&mut self, image: &mut Image) {
         // Drawing the three sides of the triangle
         Line {
-            point_a: &self.point_a,
-            point_b: &self.point_b,
+            point_a: self.point_a,
+            point_b: self.point_b,
         }
         .draw(image);
         Line {
-            point_a: &self.point_b,
-            point_b: &self.point_c,
+            point_a: self.point_b,
+            point_b: self.point_c,
         }
         .draw(image);
         Line {
-            point_a: &self.point_a,
-            point_b: &self.point_c,
+            point_a: self.point_a,
+            point_b: self.point_c,
         }
         .draw(image);
+    }
+
+    fn color(&mut self) {
+        todo!()
     }
 }
 
@@ -77,33 +92,116 @@ impl Drawable for Rectangle {
     fn draw(&mut self, image: &mut Image) {
         // Drawing the four sides of the rectangle
         Line {
-            point_a: &self.point_a,
-            point_b: &self.point_b,
+            point_a: self.point_a,
+            point_b: self.point_b,
         }
         .draw(image);
         Line {
-            point_a: &self.point_b,
-            point_b: &self.point_c,
+            point_a: self.point_b,
+            point_b: self.point_c,
         }
         .draw(image);
         Line {
-            point_a: &self.point_c,
-            point_b: &self.point_d,
+            point_a: self.point_c,
+            point_b: self.point_d,
         }
         .draw(image);
         Line {
-            point_a: &self.point_d,
-            point_b: &self.point_a,
+            point_a: self.point_d,
+            point_b: self.point_a,
         }
         .draw(image);
+    }
+
+    fn color(&mut self) {
+        todo!()
     }
 }
 
 impl Drawable for Circle {
     fn draw(&mut self, image: &mut Image) {
-        // Implementing Midpoint Circle Algorithm
-        // ... (code for drawing the circle)
+        let x0 = self.center.x;
+        let y0 = self.center.y;
 
-        // Note: This is a placeholder and needs a proper circle drawing algorithm.
+        let mut x = self.radius;
+        let mut y = 0;
+        let mut p = 1 - self.radius; // Initial decision parameter
+
+        // When radius is zero, only a single point will be printed at center
+        if self.radius == 0 {
+            Point { x: x0, y: y0 }.draw(image);
+            return;
+        }
+
+        // Initial point on circle at the end of radius
+        Point { x: x0 + x, y: y0 }.draw(image);
+        Point { x: x0 - x, y: y0 }.draw(image);
+        Point { x: x0, y: y0 + x }.draw(image);
+        Point { x: x0, y: y0 - x }.draw(image);
+
+        // Until the radius is greater than the y value
+        while x > y {
+            y += 1;
+
+            if p <= 0 {
+                p += 2 * y + 1;
+            } else {
+                x -= 1;
+                p += 2 * y - 2 * x + 1;
+            }
+
+            // If the radius is greater than the y value
+            if x < y {
+                break;
+            }
+
+            Point {
+                x: x0 + x,
+                y: y0 - y,
+            }
+            .draw(image);
+            Point {
+                x: x0 - x,
+                y: y0 - y,
+            }
+            .draw(image);
+            Point {
+                x: x0 + x,
+                y: y0 + y,
+            }
+            .draw(image);
+            Point {
+                x: x0 - x,
+                y: y0 + y,
+            }
+            .draw(image);
+
+            if x != y {
+                Point {
+                    x: x0 + y,
+                    y: y0 - x,
+                }
+                .draw(image);
+                Point {
+                    x: x0 - y,
+                    y: y0 - x,
+                }
+                .draw(image);
+                Point {
+                    x: x0 + y,
+                    y: y0 + x,
+                }
+                .draw(image);
+                Point {
+                    x: x0 - y,
+                    y: y0 + x,
+                }
+                .draw(image);
+            }
+        }
+    }
+
+    fn color(&mut self) {
+        todo!()
     }
 }
