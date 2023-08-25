@@ -5,11 +5,7 @@ impl Drawable for Point {
     fn draw(&mut self, image: &mut Image) {
         if self.x >= 0 && self.x < image.width && self.y >= 0 && self.y < image.height {
             image
-                .set_pixel(
-                    self.x as usize,
-                    self.y as usize,
-                    raster::Color::rgb(255, 255, 255),
-                )
+                .set_pixel(self.x, self.y, raster::Color::rgb(255, 255, 255))
                 .unwrap();
         }
     }
@@ -38,7 +34,11 @@ impl Drawable for Line {
         loop {
             if x0 >= 0 && x0 < image.width && y0 >= 0 && y0 < image.height {
                 image
-                    .set_pixel(x0 as usize, y0 as usize, raster::Color::rgb(255, 255, 255))
+                    .set_pixel(
+                        (x0 as usize).try_into().unwrap(),
+                        (y0 as usize).try_into().unwrap(),
+                        raster::Color::rgb(255, 255, 255),
+                    )
                     .unwrap();
             }
 
