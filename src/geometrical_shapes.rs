@@ -2,7 +2,9 @@ use rand::Rng;
 pub mod geometrical_shapes {
     pub trait Drawable {
         fn draw() {}
-        fn color() {}
+        fn color(r: u8, g: u8, b: u8, a: u8) {
+
+        }
     }
 
     pub trait Displayable {
