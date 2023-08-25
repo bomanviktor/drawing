@@ -28,10 +28,26 @@ fn main() {
     raster::save(&image, "image.png").unwrap();
 }
 
-impl Displayable for Image {
+impl gs::geometrical_shapes::Displayable for Image {
     fn display(&mut self, x: i32, y: i32, color: Color) {
         if x >= 0 && x < self.width && y >= 0 && y < self.height {
             self.set_pixel(x, y, color).unwrap();
         }
     }
+}
+
+impl gs::geometrical_shapes::Drawable for gs::Point {
+    fn color() -> Color {
+        Color{
+            r: gs::rand_num(255) as u8,
+            g: gs::rand_num(255) as u8,
+            b: gs::rand_num(255) as u8,
+            a: gs::rand_num(255) as u8
+        }
+    }
+    fn draw(&self, image: &mut Image){
+        let color = gs::geometrical_shapes::Drawable::color();
+        image.set_pixel(self.x, self.y, color).expect("TODO: panic message");
+    }
+
 }

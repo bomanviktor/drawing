@@ -1,18 +1,20 @@
 use rand::Rng;
 pub mod geometrical_shapes {
+    use raster::{Color, Image};
+
     pub trait Drawable {
-        fn draw() {}
-        fn color() {}
+        fn draw(&mut self, image: &mut Image);
+        fn color() -> Color;
     }
 
     pub trait Displayable {
-        fn display() {}
+        fn display(&mut self, x: i32, y: i32, color: Color);
     }
 }
 
 pub struct Point {
-    x: i32,
-    y: i32
+    pub x: i32,
+    pub y: i32
 }
 
 impl Point {
@@ -128,7 +130,7 @@ impl Circle {
 }
 
 // generate a tuple with two random numbers in the range of image_width and image_height
-fn rand_num(max_range: i32) -> i32 {
+pub(crate) fn rand_num(max_range: i32) -> i32 {
     rand::thread_rng().gen_range(..=max_range)
 }
 
