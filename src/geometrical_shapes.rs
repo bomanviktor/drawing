@@ -14,19 +14,23 @@ pub trait Displayable {
 pub struct Point {
     pub x: i32,
     pub y: i32,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Point {
     pub fn new(x: i32, y: i32) -> Point {
-        Point { x, y, color: Color::white() }
+        Point {
+            x,
+            y,
+            color: Color::white(),
+        }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Point {
         Point {
             x: rand_i32(max_width),
             y: rand_i32(max_height),
-            color: rand_color()
+            color: rand_color(),
         }
     }
 }
@@ -34,7 +38,7 @@ impl Point {
 pub struct Line {
     pub point_a: Point,
     pub point_b: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Line {
@@ -43,7 +47,7 @@ impl Line {
         Line {
             point_a: point_a.clone(),
             point_b: point_b.clone(),
-            color: Color::white()
+            color: Color::white(),
         }
     }
 
@@ -51,7 +55,7 @@ impl Line {
         Line {
             point_a: Point::random(max_width, max_height),
             point_b: Point::random(max_width, max_height),
-            color: rand_color()
+            color: rand_color(),
         }
     }
 }
@@ -60,17 +64,16 @@ pub struct Triangle {
     pub point_a: Point,
     pub point_b: Point,
     pub point_c: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Triangle {
     pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Triangle {
         Triangle {
-
             point_a: point_a.clone(),
             point_b: point_b.clone(),
             point_c: point_c.clone(),
-            color: Color::white()
+            color: Color::white(),
         }
     }
 }
@@ -98,7 +101,7 @@ pub struct Rectangle {
     pub point_b: Point,
     pub point_c: Point,
     pub point_d: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Rectangle {
@@ -108,7 +111,7 @@ impl Rectangle {
             point_b: Point::new(point_c.x, point_a.y),
             point_c: Point::new(point_c.x, point_c.y),
             point_d: Point::new(point_a.x, point_c.y),
-            color:   Color::white()
+            color: Color::white(),
         }
     }
 }
@@ -116,7 +119,7 @@ impl Rectangle {
 pub struct Circle {
     pub center: Point,
     pub radius: i32,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Circle {
@@ -124,7 +127,7 @@ impl Circle {
         Circle {
             center: center.clone(),
             radius,
-            color: Color::white()
+            color: Color::white(),
         }
     }
 
@@ -139,11 +142,10 @@ impl Circle {
         Circle {
             center: Point::random(max_width, max_height),
             radius: rand_i32(max_range),
-            color: rand_color()
+            color: rand_color(),
         }
     }
 }
-
 
 pub struct Pentagon {
     pub point_a: Point,
@@ -151,18 +153,24 @@ pub struct Pentagon {
     pub point_c: Point,
     pub point_d: Point,
     pub point_e: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Pentagon {
-    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point, point_d: &Point, point_e: &Point) -> Pentagon {
+    pub fn new(
+        point_a: &Point,
+        point_b: &Point,
+        point_c: &Point,
+        point_d: &Point,
+        point_e: &Point,
+    ) -> Pentagon {
         Pentagon {
             point_a: point_a.clone(),
             point_b: point_b.clone(),
             point_c: point_c.clone(),
             point_d: point_d.clone(),
             point_e: point_e.clone(),
-            color: Color::white()
+            color: Color::white(),
         }
     }
 }
@@ -174,14 +182,19 @@ pub struct Cube {
     pub top_right: Line,
     pub bottom_right: Line,
     pub bottom_left: Line,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Cube {
     pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Cube {
         let front = Rectangle::new(point_a, point_b);
-        let rear = Rectangle::new(point_c, &Point::new((
-            point_b.x - point_c.x) + point_b.x, (point_b.y - point_a.y) + point_c.y));
+        let rear = Rectangle::new(
+            point_c,
+            &Point::new(
+                (point_b.x - point_c.x) + point_b.x,
+                (point_b.y - point_a.y) + point_c.y,
+            ),
+        );
         Cube {
             top_left: Line::new(&front.point_a, &rear.point_a),
             top_right: Line::new(&front.point_b, &rear.point_b),
@@ -189,7 +202,7 @@ impl Cube {
             bottom_left: Line::new(&front.point_d, &rear.point_d),
             front,
             rear,
-            color: Color::white()
+            color: Color::white(),
         }
     }
 }
@@ -209,7 +222,7 @@ fn rand_color() -> Color {
         r: rand_u8(),
         g: rand_u8(),
         b: rand_u8(),
-        a: 255
+        a: 255,
     }
 }
 
@@ -219,18 +232,5 @@ pub fn back_cube_color(color: &Color) -> Color {
         g: color.g.clone(),
         b: color.b.clone(),
         a: rand::thread_rng().gen_range(50..=150),
-}
-
-// generate a random u8
-fn rand_u8() -> u8 {
-    rand::thread_rng().gen_range(0..=std::u8::MAX)
-}
-
-fn rand_color() -> Color {
-    Color {
-        r: rand_u8(),
-        g: rand_u8(),
-        b: rand_u8(),
-        a: 255
     }
 }
