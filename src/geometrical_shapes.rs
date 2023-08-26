@@ -41,8 +41,8 @@ impl Line {
     // Need to figure out implementation of the referenced "Point"
     pub fn new(point_a: &Point, point_b: &Point) -> Line {
         Line {
-            point_a: Point::new(point_a.x, point_a.y),
-            point_b: Point::new(point_b.x, point_b.y),
+            point_a: point_a.clone(),
+            point_b: point_b.clone(),
             color: Color::white()
         }
     }
@@ -66,9 +66,9 @@ pub struct Triangle {
 impl Triangle {
     pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Triangle {
         Triangle {
-            point_a: Point::new(point_a.x, point_a.y),
-            point_b: Point::new(point_b.x, point_b.y),
-            point_c: Point::new(point_c.x, point_c.y),
+            point_a: point_a.clone(),
+            point_b: point_b.clone(),
+            point_c: point_c.clone(),
             color: Color::white()
         }
     }
@@ -121,7 +121,7 @@ pub struct Circle {
 impl Circle {
     pub fn new(center: &Point, radius: i32) -> Circle {
         Circle {
-            center: Point::new(center.x, center.y),
+            center: center.clone(),
             radius,
             color: Color::white()
         }
@@ -139,6 +139,29 @@ impl Circle {
             center: Point::random(max_width, max_height),
             radius: rand_i32(max_range),
             color: rand_color()
+        }
+    }
+}
+
+
+pub struct Pentagon {
+    pub point_a: Point,
+    pub point_b: Point,
+    pub point_c: Point,
+    pub point_d: Point,
+    pub point_e: Point,
+    pub color: Color
+}
+
+impl Pentagon {
+    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point, point_d: &Point, point_e: &Point) -> Pentagon {
+        Pentagon {
+            point_a: point_a.clone(),
+            point_b: point_b.clone(),
+            point_c: point_c.clone(),
+            point_d: point_d.clone(),
+            point_e: point_e.clone(),
+            color: Color::white()
         }
     }
 }

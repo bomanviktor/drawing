@@ -1,4 +1,4 @@
-use crate::geometrical_shapes::{Circle, Drawable, Line, Point, Rectangle, Triangle};
+use crate::geometrical_shapes::*;
 use raster::{Image, Color};
 
 impl Drawable for Point {
@@ -18,7 +18,6 @@ impl Drawable for Point {
 
 impl Drawable for Line {
     fn draw(&mut self, image: &mut Image) {
-
         // Implementing Bresenham's Line Algorithm
         let mut center_x = self.point_a.x;
         let mut center_y = self.point_a.y;
@@ -150,4 +149,22 @@ impl Drawable for Circle {
         self.color = color.clone();
         self
     }
+}
+
+impl Drawable for Pentagon {
+    fn draw(&mut self, image: &mut Image) {
+        let color = &self.color;
+        
+        Line::new(&self.point_a, &self.point_b).color(color).draw(image);
+        Line::new(&self.point_b, &self.point_c).color(color).draw(image);
+        Line::new(&self.point_c, &self.point_d).color(color).draw(image);
+        Line::new(&self.point_d, &self.point_e).color(color).draw(image);
+        Line::new(&self.point_e, &self.point_a).color(color).draw(image);
+    }
+
+    fn color(&mut self, color: &Color) -> &mut Self {
+        self.color = color.clone();
+        self
+    }
+
 }
