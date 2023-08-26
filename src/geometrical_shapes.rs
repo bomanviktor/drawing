@@ -166,6 +166,33 @@ impl Pentagon {
     }
 }
 
+pub struct Cube {
+    pub front: Rectangle,
+    pub rear: Rectangle,
+    pub top_left: Line,
+    pub top_right: Line,
+    pub bottom_right: Line,
+    pub bottom_left: Line,
+    pub color: Color
+}
+
+impl Cube {
+    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Cube {
+        let front = Rectangle::new(point_a, point_b);
+        let rear = Rectangle::new(point_c, &Point::new((
+            point_b.x - point_c.x) + point_b.x, (point_b.y - point_a.y) + point_c.y));
+        Cube {
+            top_left: Line::new(&front.point_a, &rear.point_a),
+            top_right: Line::new(&front.point_b, &rear.point_b),
+            bottom_right: Line::new(&front.point_c, &rear.point_c),
+            bottom_left: Line::new(&front.point_d, &rear.point_d),
+            front,
+            rear,
+            color: Color::white()
+        }
+    }
+}
+
 // generate a random int in the range of image_width and image_height
 fn rand_i32(max_range: i32) -> i32 {
     rand::thread_rng().gen_range(0..=max_range)
@@ -182,5 +209,14 @@ fn rand_color() -> Color {
         g: rand_u8(),
         b: rand_u8(),
         a: 255
+    }
+}
+
+pub fn back_cube_color(color: &Color) -> Color {
+    Color {
+        r: color.r.clone(),
+        g: color.g.clone(),
+        b: color.b.clone(),
+        a: rand::thread_rng().gen_range(50..=150),
     }
 }
