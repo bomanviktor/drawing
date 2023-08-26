@@ -17,13 +17,7 @@ fn main() {
     let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
-    let mut pentagon = gs::Pentagon::new(
-        &gs::Point::new(600, 600),
-        &gs::Point::new(650, 550),
-        &gs::Point::new(600, 500),
-        &gs::Point::new(550, 500),
-        &gs::Point::new(550, 550),
-    );
+    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 500), 200, 0, &Color::white());
 
     pentagon.draw(&mut image);
 

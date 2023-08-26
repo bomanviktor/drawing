@@ -1,6 +1,7 @@
 use crate::geometrical_shapes::*;
+use std::f64::consts::PI;
 
-use raster::{Image, Color};
+use raster::{Color, Image};
 
 impl Drawable for Point {
     fn draw(&mut self, image: &mut Image) {
@@ -69,10 +70,16 @@ impl Drawable for Line {
 impl Drawable for Triangle {
     fn draw(&mut self, image: &mut Image) {
         let color = &self.color;
-        
-        Line::new(&self.point_a, &self.point_b).color(color).draw(image);
-        Line::new(&self.point_b, &self.point_c).color(color).draw(image);
-        Line::new(&self.point_a, &self.point_c).color(color).draw(image);
+
+        Line::new(&self.point_a, &self.point_b)
+            .color(color)
+            .draw(image);
+        Line::new(&self.point_b, &self.point_c)
+            .color(color)
+            .draw(image);
+        Line::new(&self.point_a, &self.point_c)
+            .color(color)
+            .draw(image);
     }
 
     fn color(&mut self, color: &Color) -> &mut Self {
@@ -84,11 +91,19 @@ impl Drawable for Triangle {
 impl Drawable for Rectangle {
     fn draw(&mut self, image: &mut Image) {
         let color = &self.color;
-        
-        Line::new(&self.point_a, &self.point_b).color(color).draw(image);
-        Line::new(&self.point_b, &self.point_c).color(color).draw(image);
-        Line::new(&self.point_c, &self.point_d).color(color).draw(image);
-        Line::new(&self.point_d, &self.point_a).color(color).draw(image);
+
+        Line::new(&self.point_a, &self.point_b)
+            .color(color)
+            .draw(image);
+        Line::new(&self.point_b, &self.point_c)
+            .color(color)
+            .draw(image);
+        Line::new(&self.point_c, &self.point_d)
+            .color(color)
+            .draw(image);
+        Line::new(&self.point_d, &self.point_a)
+            .color(color)
+            .draw(image);
     }
 
     fn color(&mut self, color: &Color) -> &mut Self {
@@ -112,9 +127,15 @@ impl Drawable for Circle {
         }
 
         // Initial point on circle at the end of radius
-        Point::new(center_x - radius, center_y).color(color).draw(image);
-        Point::new(center_x, center_y + radius).color(color).draw(image);
-        Point::new(center_x, center_y - radius).color(color).draw(image);
+        Point::new(center_x - radius, center_y)
+            .color(color)
+            .draw(image);
+        Point::new(center_x, center_y + radius)
+            .color(color)
+            .draw(image);
+        Point::new(center_x, center_y - radius)
+            .color(color)
+            .draw(image);
 
         // Until the radius is greater than the y value
         while radius > y {
@@ -132,16 +153,32 @@ impl Drawable for Circle {
                 break;
             }
 
-            Point::new(center_x + radius, center_y - y).color(color).draw(image);
-            Point::new(center_x - radius, center_y - y).color(color).draw(image);
-            Point::new(center_x + radius, center_y + y).color(color).draw(image);
-            Point::new(center_x - radius, center_y + y).color(color).draw(image);
+            Point::new(center_x + radius, center_y - y)
+                .color(color)
+                .draw(image);
+            Point::new(center_x - radius, center_y - y)
+                .color(color)
+                .draw(image);
+            Point::new(center_x + radius, center_y + y)
+                .color(color)
+                .draw(image);
+            Point::new(center_x - radius, center_y + y)
+                .color(color)
+                .draw(image);
 
             if radius != y {
-                Point::new(center_x + y, center_y - radius).color(color).draw(image);
-                Point::new(center_x - y, center_y - radius).color(color).draw(image);
-                Point::new(center_x + y, center_y + radius).color(color).draw(image);
-                Point::new(center_x - y, center_y + radius).color(color).draw(image);
+                Point::new(center_x + y, center_y - radius)
+                    .color(color)
+                    .draw(image);
+                Point::new(center_x - y, center_y - radius)
+                    .color(color)
+                    .draw(image);
+                Point::new(center_x + y, center_y + radius)
+                    .color(color)
+                    .draw(image);
+                Point::new(center_x - y, center_y + radius)
+                    .color(color)
+                    .draw(image);
             }
         }
     }
@@ -152,17 +189,20 @@ impl Drawable for Circle {
     }
 }
 
-
-
-
 impl Drawable for Pentagon {
     fn draw(&mut self, image: &mut Image) {
         let color = &self.color;
-        Line::new(&self.point_a, &self.point_b).color(&Color::green()).draw(image);
-        Line::new(&self.point_b, &self.point_c).color(&Color::white()).draw(image);
-        Line::new(&self.point_c, &self.point_d).color(&Color::rgb(255, 155, 0)).draw(image);
-        Line::new(&self.point_d, &self.point_e).color(&Color::red()).draw(image);
-        Line::new(&self.point_e, &self.point_a).color(&Color::blue()).draw(image);
+        for angle in 0..5 {
+            let rad1 = (angle * 72 + self.rotation - 90) as f64 * PI / 180.0;
+            let rad2 = ((angle + 1) * 72 + self.rotation - 90) as f64 * PI / 180.0;
+            let x1 = self.center.x + (self.radius as f64 * rad1.cos()) as i32;
+            let y1 = self.center.y + (self.radius as f64 * rad1.sin()) as i32;
+            let x2 = self.center.x + (self.radius as f64 * rad2.cos()) as i32;
+            let y2 = self.center.y + (self.radius as f64 * rad2.sin()) as i32;
+            Line::new(&Point::new(x1, y1), &Point::new(x2, y2))
+                .color(color)
+                .draw(image);
+        }
     }
 
     fn color(&mut self, color: &Color) -> &mut Self {
@@ -181,7 +221,6 @@ impl Drawable for Cube {
         self.bottom_left.color(&Color::red()).draw(image);
         self.bottom_right.color(&Color::blue()).draw(image);
         self.front.color(color).draw(image);
-        
     }
     fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();

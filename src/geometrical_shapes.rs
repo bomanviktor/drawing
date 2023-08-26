@@ -10,6 +10,9 @@ pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, color: Color);
 }
 
+/// A point is a single pixel on the screen having:
+///
+/// x, y, color
 #[derive(Clone)]
 pub struct Point {
     pub x: i32,
@@ -148,29 +151,19 @@ impl Circle {
 }
 
 pub struct Pentagon {
-    pub point_a: Point,
-    pub point_b: Point,
-    pub point_c: Point,
-    pub point_d: Point,
-    pub point_e: Point,
+    pub center: Point,
+    pub radius: i32,
+    pub rotation: i32,
     pub color: Color,
 }
 
 impl Pentagon {
-    pub fn new(
-        point_a: &Point,
-        point_b: &Point,
-        point_c: &Point,
-        point_d: &Point,
-        point_e: &Point,
-    ) -> Pentagon {
+    pub fn new(center: &Point, radius: i32, rotation: i32, color: &Color) -> Pentagon {
         Pentagon {
-            point_a: point_a.clone(),
-            point_b: point_b.clone(),
-            point_c: point_c.clone(),
-            point_d: point_d.clone(),
-            point_e: point_e.clone(),
-            color: Color::white(),
+            center: center.clone(),
+            radius,
+            rotation,
+            color: color.clone(),
         }
     }
 }
