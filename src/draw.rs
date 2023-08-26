@@ -1,4 +1,5 @@
-use crate::geometrical_shapes::{Circle, Drawable, Line, Point, Rectangle, Triangle};
+use crate::geometrical_shapes::*;
+
 use raster::{Image, Color};
 
 impl Drawable for Point {
@@ -18,7 +19,6 @@ impl Drawable for Point {
 
 impl Drawable for Line {
     fn draw(&mut self, image: &mut Image) {
-
         // Implementing Bresenham's Line Algorithm
         let mut center_x = self.point_a.x;
         let mut center_y = self.point_a.y;
@@ -146,6 +146,43 @@ impl Drawable for Circle {
         }
     }
 
+    fn color(&mut self, color: &Color) -> &mut Self {
+        self.color = color.clone();
+        self
+    }
+}
+
+
+
+
+impl Drawable for Pentagon {
+    fn draw(&mut self, image: &mut Image) {
+        let color = &self.color;
+        Line::new(&self.point_a, &self.point_b).color(&Color::green()).draw(image);
+        Line::new(&self.point_b, &self.point_c).color(&Color::white()).draw(image);
+        Line::new(&self.point_c, &self.point_d).color(&Color::rgb(255, 155, 0)).draw(image);
+        Line::new(&self.point_d, &self.point_e).color(&Color::red()).draw(image);
+        Line::new(&self.point_e, &self.point_a).color(&Color::blue()).draw(image);
+    }
+
+    fn color(&mut self, color: &Color) -> &mut Self {
+        self.color = color.clone();
+        self
+    }
+}
+
+impl Drawable for Cube {
+    fn draw(&mut self, image: &mut Image) {
+        let color = &self.color;
+
+        self.rear.color(color).draw(image);
+        self.top_left.color(color).draw(image);
+        self.top_right.color(color).draw(image);
+        self.bottom_left.color(&Color::red()).draw(image);
+        self.bottom_right.color(&Color::blue()).draw(image);
+        self.front.color(color).draw(image);
+        
+    }
     fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();
         self
