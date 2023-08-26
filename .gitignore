@@ -1,0 +1,43 @@
+# Compiled files
+*.o
+*.rlib
+*.so
+*.exe
+*.dll
+*.dylib
+*.d
+
+# The `target` directory which contains the build outputs and its dependencies
+**/target/
+
+# Temporary files
+*.tmp
+
+# Configuration files for tools like `rustfmt` or `clippy`
+**/*.rs.bk
+
+# Files related to IDEs or other code editors
+.idea/            
+*.iml           
+.vscode/        
+*.sublime*       
+*.swp            
+*.swo           
+
+# OS related files
+.DS_Store         
+Thumbs.db        
+*.log            
+
+# Files and directories related to Cargo
+Cargo.lock 
+.cargo/
+
+# Files and directories related to environment variables and configuration
+.env
+config/
+
+# Other files that might appear in some projects
+*.bak           
+*.swp            
+*~              

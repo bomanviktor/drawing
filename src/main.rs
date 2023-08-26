@@ -1,7 +1,9 @@
+mod draw;
 mod geometrical_shapes;
 
+use crate::geometrical_shapes::Drawable;
 use geometrical_shapes as gs;
-use gs::{Displayable, Drawable};
+use gs::Displayable;
 use raster::{Color, Image};
 
 fn main() {
@@ -11,10 +13,10 @@ fn main() {
 
     gs::Point::random(image.width, image.height).draw(&mut image);
 
-    let rectangle = gs::Rectangle::new(&gs::Point::new(150, 150), &gs::Point::new(50, 50));
+    let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
-    let triangle = gs::Triangle::new (
+    let mut triangle = gs::Triangle::new(
         &gs::Point::new(500, 500),
         &gs::Point::new(250, 700),
         &gs::Point::new(700, 800),
