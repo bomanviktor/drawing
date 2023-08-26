@@ -1,4 +1,5 @@
 use crate::geometrical_shapes::*;
+
 use raster::{Image, Color};
 
 impl Drawable for Point {
@@ -150,6 +151,7 @@ impl Drawable for Circle {
         self
     }
 }
+
 
 
 

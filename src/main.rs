@@ -4,6 +4,7 @@ mod geometrical_shapes;
 use crate::geometrical_shapes::Drawable;
 use geometrical_shapes as gs;
 use gs::{Displayable, Pentagon};
+
 use raster::{Color, Image};
 
 fn main() {
@@ -15,6 +16,7 @@ fn main() {
 
     let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
+
 
     let mut pentagon = gs::Pentagon::new(
         &gs::Point::new(600, 600),
@@ -41,9 +43,9 @@ fn main() {
     );
     triangle.draw(&mut image);
 
-    // for _ in 1..50 {
-    //     gs::Circle::random(image.width, image.height).draw(&mut image);
-    // }
+    for _ in 1..50 {
+         gs::Circle::random(image.width, image.height).draw(&mut image);
+    }
 
     raster::save(&image, "image.png").unwrap();
 }

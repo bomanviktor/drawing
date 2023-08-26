@@ -66,6 +66,7 @@ pub struct Triangle {
 impl Triangle {
     pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Triangle {
         Triangle {
+
             point_a: point_a.clone(),
             point_b: point_b.clone(),
             point_c: point_c.clone(),
@@ -218,5 +219,18 @@ pub fn back_cube_color(color: &Color) -> Color {
         g: color.g.clone(),
         b: color.b.clone(),
         a: rand::thread_rng().gen_range(50..=150),
+}
+
+// generate a random u8
+fn rand_u8() -> u8 {
+    rand::thread_rng().gen_range(0..=std::u8::MAX)
+}
+
+fn rand_color() -> Color {
+    Color {
+        r: rand_u8(),
+        g: rand_u8(),
+        b: rand_u8(),
+        a: 255
     }
 }
