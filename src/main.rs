@@ -13,7 +13,7 @@ fn main() {
 
     gs::Point::random(image.width, image.height).draw(&mut image);
 
-    let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 150), &gs::Point::new(50, 50));
+    let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
     let mut triangle = gs::Triangle::new(

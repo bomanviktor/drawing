@@ -3,7 +3,7 @@ use raster::{Color, Image};
 
 pub trait Drawable {
     fn draw(&mut self, image: &mut Image);
-    fn color(&mut self, color: Color) -> &mut Self;
+    fn color(&mut self, color: &Color) -> &mut Self;
 }
 
 pub trait Displayable {
@@ -43,7 +43,7 @@ impl Line {
         Line {
             point_a: Point::new(point_a.x, point_a.y),
             point_b: Point::new(point_b.x, point_b.y),
-            color: rand_color()
+            color: Color::white()
         }
     }
 
@@ -69,7 +69,7 @@ impl Triangle {
             point_a: Point::new(point_a.x, point_a.y),
             point_b: Point::new(point_b.x, point_b.y),
             point_c: Point::new(point_c.x, point_c.y),
-            color: rand_color()
+            color: Color::white()
         }
     }
 }
@@ -128,9 +128,16 @@ impl Circle {
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Circle {
+        let max_range: i32;
+        if max_width >= max_height {
+            max_range = max_width;
+        } else {
+            max_range = max_height;
+        }
+
         Circle {
             center: Point::random(max_width, max_height),
-            radius: rand_i32(max_height),
+            radius: rand_i32(max_range),
             color: rand_color()
         }
     }
@@ -151,6 +158,6 @@ fn rand_color() -> Color {
         r: rand_u8(),
         g: rand_u8(),
         b: rand_u8(),
-        a: rand_u8()
+        a: 255
     }
 }

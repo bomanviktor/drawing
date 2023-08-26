@@ -5,12 +5,12 @@ impl Drawable for Point {
     fn draw(&mut self, image: &mut Image) {
         if self.x >= 0 && self.x < image.width && self.y >= 0 && self.y < image.height {
             image
-                .set_pixel(self.x, self.y, self.color)
+                .set_pixel(self.x, self.y, self.color.to_owned())
                 .unwrap();
         }
     }
 
-    fn color(&mut self, color: Color) -> &mut Self {
+    fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();
         self
     }
@@ -39,7 +39,7 @@ impl Drawable for Line {
                     .set_pixel(
                         (center_x as usize).try_into().unwrap(),
                         (center_y as usize).try_into().unwrap(),
-                        raster::Color::rgb(255, 255, 255),
+                        self.color.to_owned(),
                     )
                     .unwrap();
             }
@@ -60,34 +60,38 @@ impl Drawable for Line {
         }
     }
 
-    fn color(&mut self, color: Color) {
-        self.color = color.clone()
+    fn color(&mut self, color: &Color) -> &mut Self {
+        self.color = color.clone();
+        self
     }
 }
 
 impl Drawable for Triangle {
     fn draw(&mut self, image: &mut Image) {
-        // Drawing the three sides of the triangle
-        Line::new(&self.point_a, &self.point_b).draw(image);
-        Line::new(&self.point_b, &self.point_c).draw(image);
-        Line::new(&self.point_a, &self.point_c).draw(image);
+        let color = &self.color;
+        
+        Line::new(&self.point_a, &self.point_b).color(color).draw(image);
+        Line::new(&self.point_b, &self.point_c).color(color).draw(image);
+        Line::new(&self.point_a, &self.point_c).color(color).draw(image);
     }
 
-    fn color(&mut self, color: Color) {
-        self.color = color
+    fn color(&mut self, color: &Color) -> &mut Self {
+        self.color = color.clone();
+        self
     }
 }
 
 impl Drawable for Rectangle {
     fn draw(&mut self, image: &mut Image) {
-        // Drawing the four sides of the rectangle
-        Line::new(&self.point_a, &self.point_b).draw(image);
-        Line::new(&self.point_b, &self.point_c).draw(image);
-        Line::new(&self.point_c, &self.point_d).draw(image);
-        Line::new(&self.point_d, &self.point_a).draw(image);
+        let color = &self.color;
+        
+        Line::new(&self.point_a, &self.point_b).color(color).draw(image);
+        Line::new(&self.point_b, &self.point_c).color(color).draw(image);
+        Line::new(&self.point_c, &self.point_d).color(color).draw(image);
+        Line::new(&self.point_d, &self.point_a).color(color).draw(image);
     }
 
-    fn color(&mut self, color: Color) -> &mut Self {
+    fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();
         self
     }
@@ -97,20 +101,17 @@ impl Drawable for Circle {
     fn draw(&mut self, image: &mut Image) {
         let center_x = self.center.x;
         let center_y = self.center.y;
-        let color = self.color;
+        let color = &self.color;
 
         let mut radius = self.radius;
         let mut y = 0;
         let mut p = 1 - self.radius; // Initial decision parameter
 
-        // When radius is zero, only a single point will be printed at center
         if self.radius == 0 {
-            Point::new(center_x, center_y).color(color).draw(image);
             return;
         }
 
         // Initial point on circle at the end of radius
-        Point::new(center_x, center_y).color(color).draw(image);
         Point::new(center_x - radius, center_y).color(color).draw(image);
         Point::new(center_x, center_y + radius).color(color).draw(image);
         Point::new(center_x, center_y - radius).color(color).draw(image);
@@ -137,7 +138,7 @@ impl Drawable for Circle {
             Point::new(center_x - radius, center_y + y).color(color).draw(image);
 
             if radius != y {
-                Point::new(center_x + radius, center_y - radius).color(color).draw(image);
+                Point::new(center_x + y, center_y - radius).color(color).draw(image);
                 Point::new(center_x - y, center_y - radius).color(color).draw(image);
                 Point::new(center_x + y, center_y + radius).color(color).draw(image);
                 Point::new(center_x - y, center_y + radius).color(color).draw(image);
@@ -145,7 +146,7 @@ impl Drawable for Circle {
         }
     }
 
-    fn color(&mut self, color: Color) -> &mut Self {
+    fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();
         self
     }
