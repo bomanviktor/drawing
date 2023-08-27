@@ -1,32 +1,46 @@
+use crate::random_color::RandomColor;
 use rand::Rng;
 use raster::{Color, Image};
 
+/// The `Drawable` trait defines two methods: `draw` and `color`.
 pub trait Drawable {
     fn draw(&mut self, image: &mut Image);
     fn color(&mut self, color: &Color) -> &mut Self;
 }
 
+/// The `Displayable` trait defines a method `display` that takes in three
+/// parameters: `x`, `y`, and `color`. This trait is used to specify that a type can
+/// be displayed on the screen at a specific position (`x`, `y`) with a specific
+/// color. The `display` method is responsible for actually rendering the object on
+/// the screen.
 pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, color: Color);
 }
 
+/// A point is a single pixel on the screen having:
+///
+/// x, y, color
 #[derive(Clone)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Point {
     pub fn new(x: i32, y: i32) -> Point {
-        Point { x, y, color: Color::white() }
+        Point {
+            x,
+            y,
+            color: Color::random(),
+        }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Point {
         Point {
             x: rand_i32(max_width),
             y: rand_i32(max_height),
-            color: rand_color()
+            color: Color::random(),
         }
     }
 }
@@ -34,16 +48,15 @@ impl Point {
 pub struct Line {
     pub point_a: Point,
     pub point_b: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Line {
-    // Need to figure out implementation of the referenced "Point"
     pub fn new(point_a: &Point, point_b: &Point) -> Line {
         Line {
             point_a: point_a.clone(),
             point_b: point_b.clone(),
-            color: Color::white()
+            color: Color::random(),
         }
     }
 
@@ -51,7 +64,7 @@ impl Line {
         Line {
             point_a: Point::random(max_width, max_height),
             point_b: Point::random(max_width, max_height),
-            color: rand_color()
+            color: Color::random(),
         }
     }
 }
@@ -60,17 +73,16 @@ pub struct Triangle {
     pub point_a: Point,
     pub point_b: Point,
     pub point_c: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Triangle {
     pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Triangle {
         Triangle {
-
             point_a: point_a.clone(),
             point_b: point_b.clone(),
             point_c: point_c.clone(),
-            color: Color::white()
+            color: Color::random(),
         }
     }
 }
@@ -98,17 +110,17 @@ pub struct Rectangle {
     pub point_b: Point,
     pub point_c: Point,
     pub point_d: Point,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Rectangle {
     pub fn new(point_a: &Point, point_c: &Point) -> Rectangle {
         Rectangle {
-            point_a: Point::new(point_a.x, point_a.y),
+            point_a: point_a.clone(),
             point_b: Point::new(point_c.x, point_a.y),
-            point_c: Point::new(point_c.x, point_c.y),
+            point_c: point_c.clone(),
             point_d: Point::new(point_a.x, point_c.y),
-            color:   Color::white()
+            color: Color::random(),
         }
     }
 }
@@ -116,7 +128,7 @@ impl Rectangle {
 pub struct Circle {
     pub center: Point,
     pub radius: i32,
-    pub color: Color
+    pub color: Color,
 }
 
 impl Circle {
@@ -124,72 +136,49 @@ impl Circle {
         Circle {
             center: center.clone(),
             radius,
-            color: Color::white()
+            color: Color::random(),
         }
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Circle {
-        let max_range: i32;
-        if max_width >= max_height {
-            max_range = max_width;
-        } else {
-            max_range = max_height;
-        }
-
         Circle {
             center: Point::random(max_width, max_height),
-            radius: rand_i32(max_range),
-            color: rand_color()
+            radius: rand_i32(std::cmp::max(max_width, max_height)),
+            color: Color::random(),
         }
     }
 }
 
-
 pub struct Pentagon {
-    pub point_a: Point,
-    pub point_b: Point,
-    pub point_c: Point,
-    pub point_d: Point,
-    pub point_e: Point,
-    pub color: Color
+    pub center: Point,
+    pub radius: i32,
+    pub rotation: i32,
+    pub color: Color,
 }
 
 impl Pentagon {
-    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point, point_d: &Point, point_e: &Point) -> Pentagon {
+    pub fn new(center: &Point, radius: i32, rotation: i32, color: &Color) -> Pentagon {
         Pentagon {
-            point_a: point_a.clone(),
-            point_b: point_b.clone(),
-            point_c: point_c.clone(),
-            point_d: point_d.clone(),
-            point_e: point_e.clone(),
-            color: Color::white()
+            center: center.clone(),
+            radius,
+            rotation,
+            color: color.clone(),
         }
     }
 }
 
 pub struct Cube {
-    pub front: Rectangle,
-    pub rear: Rectangle,
-    pub top_left: Line,
-    pub top_right: Line,
-    pub bottom_right: Line,
-    pub bottom_left: Line,
-    pub color: Color
+    pub top_left: Point,
+    pub width: i32,
+    pub color: Color,
 }
 
 impl Cube {
-    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Cube {
-        let front = Rectangle::new(point_a, point_b);
-        let rear = Rectangle::new(point_c, &Point::new((
-            point_b.x - point_c.x) + point_b.x, (point_b.y - point_a.y) + point_c.y));
+    pub fn new(p: &Point, width: i32, color: &Color) -> Cube {
         Cube {
-            top_left: Line::new(&front.point_a, &rear.point_a),
-            top_right: Line::new(&front.point_b, &rear.point_b),
-            bottom_right: Line::new(&front.point_c, &rear.point_c),
-            bottom_left: Line::new(&front.point_d, &rear.point_d),
-            front,
-            rear,
-            color: Color::white()
+            top_left: p.clone(),
+            width,
+            color: color.clone(),
         }
     }
 }
@@ -197,40 +186,4 @@ impl Cube {
 // generate a random int in the range of image_width and image_height
 fn rand_i32(max_range: i32) -> i32 {
     rand::thread_rng().gen_range(0..=max_range)
-}
-
-// generate a random u8
-fn rand_u8() -> u8 {
-    rand::thread_rng().gen_range(0..=std::u8::MAX)
-}
-
-fn rand_color() -> Color {
-    Color {
-        r: rand_u8(),
-        g: rand_u8(),
-        b: rand_u8(),
-        a: 255
-    }
-}
-
-pub fn back_cube_color(color: &Color) -> Color {
-    Color {
-        r: color.r.clone(),
-        g: color.g.clone(),
-        b: color.b.clone(),
-        a: rand::thread_rng().gen_range(50..=150),
-}
-
-// generate a random u8
-fn rand_u8() -> u8 {
-    rand::thread_rng().gen_range(0..=std::u8::MAX)
-}
-
-fn rand_color() -> Color {
-    Color {
-        r: rand_u8(),
-        g: rand_u8(),
-        b: rand_u8(),
-        a: 255
-    }
 }
