@@ -1,9 +1,11 @@
 mod draw;
 mod geometrical_shapes;
+mod random_color;
 
 use crate::geometrical_shapes::Drawable;
 use geometrical_shapes as gs;
-use gs::{Displayable, Pentagon};
+use gs::Displayable;
+use random_color::RandomColor;
 
 use raster::{Color, Image};
 
@@ -17,34 +19,23 @@ fn main() {
     let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
-
-    let mut pentagon = gs::Pentagon::new(
-        &gs::Point::new(600, 600),
-        &gs::Point::new(650, 550),
-        &gs::Point::new(600, 500),
-        &gs::Point::new(550, 500),
-        &gs::Point::new(550, 550),
-    );
+    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 300), 200, 0, &Color::random());
 
     pentagon.draw(&mut image);
 
-    let mut cube = gs::Cube::new(
-        &gs::Point::new(700, 700),
-        &gs::Point::new(750, 750),
-        &gs::Point::new(725, 675),
-    );
+    let mut cube = gs::Cube::new(&gs::Point::new(500, 500), 200, &Color::random());
 
     cube.draw(&mut image);
 
     let mut triangle = gs::Triangle::new(
-        &gs::Point::new(500, 500),
-        &gs::Point::new(250, 700),
-        &gs::Point::new(700, 800),
+        &gs::Point::new(200, 500),
+        &gs::Point::new(150, 700),
+        &gs::Point::new(400, 800),
     );
     triangle.draw(&mut image);
 
     for _ in 1..50 {
-         gs::Circle::random(image.width, image.height).draw(&mut image);
+        gs::Circle::random(image.width, image.height).draw(&mut image);
     }
 
     raster::save(&image, "image.png").unwrap();

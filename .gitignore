@@ -1,14 +1,14 @@
 # Compiled files
-*.o
-*.rlib
-*.so
-*.exe
+**/*.o
+**/*.rlib
+**/*.so
+**/*.exe
 *.dll
 *.dylib
 *.d
 
 # The `target` directory which contains the build outputs and its dependencies
-**/target/
+**/*target
 
 # Temporary files
 *.tmp
@@ -25,7 +25,7 @@
 *.swo           
 
 # OS related files
-.DS_Store         
+**/*.DS_Store         
 Thumbs.db        
 *.log            
 
