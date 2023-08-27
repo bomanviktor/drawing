@@ -1,3 +1,4 @@
+use crate::random_color::RandomColor;
 use rand::Rng;
 use raster::{Color, Image};
 
@@ -25,7 +26,7 @@ impl Point {
         Point {
             x,
             y,
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 
@@ -33,7 +34,7 @@ impl Point {
         Point {
             x: rand_i32(max_width),
             y: rand_i32(max_height),
-            color: rand_color(),
+            color: Color::random(),
         }
     }
 }
@@ -50,7 +51,7 @@ impl Line {
         Line {
             point_a: point_a.clone(),
             point_b: point_b.clone(),
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 
@@ -58,7 +59,7 @@ impl Line {
         Line {
             point_a: Point::random(max_width, max_height),
             point_b: Point::random(max_width, max_height),
-            color: rand_color(),
+            color: Color::random(),
         }
     }
 }
@@ -76,7 +77,7 @@ impl Triangle {
             point_a: point_a.clone(),
             point_b: point_b.clone(),
             point_c: point_c.clone(),
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 }
@@ -114,7 +115,7 @@ impl Rectangle {
             point_b: Point::new(point_c.x, point_a.y),
             point_c: Point::new(point_c.x, point_c.y),
             point_d: Point::new(point_a.x, point_c.y),
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 }
@@ -130,7 +131,7 @@ impl Circle {
         Circle {
             center: center.clone(),
             radius,
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 
@@ -145,7 +146,7 @@ impl Circle {
         Circle {
             center: Point::random(max_width, max_height),
             radius: rand_i32(max_range),
-            color: rand_color(),
+            color: Color::random(),
         }
     }
 }
@@ -179,7 +180,7 @@ impl Cube {
         Cube {
             top_left: p.clone(),
             width,
-            color: Color::white(),
+            color: Color::random(),
         }
     }
 }
@@ -192,22 +193,4 @@ fn rand_i32(max_range: i32) -> i32 {
 // generate a random u8
 fn rand_u8() -> u8 {
     rand::thread_rng().gen_range(0..=std::u8::MAX)
-}
-
-fn rand_color() -> Color {
-    Color {
-        r: rand_u8(),
-        g: rand_u8(),
-        b: rand_u8(),
-        a: 255,
-    }
-}
-
-pub fn back_cube_color(color: &Color) -> Color {
-    Color {
-        r: color.r.clone(),
-        g: color.g.clone(),
-        b: color.b.clone(),
-        a: rand::thread_rng().gen_range(50..=150),
-    }
 }

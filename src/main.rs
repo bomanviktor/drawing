@@ -1,9 +1,11 @@
 mod draw;
 mod geometrical_shapes;
+mod random_color;
 
 use crate::geometrical_shapes::Drawable;
 use geometrical_shapes as gs;
 use gs::Displayable;
+use random_color::RandomColor;
 
 use raster::{Color, Image};
 
@@ -17,11 +19,11 @@ fn main() {
     let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
-    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 300), 200, 0, &Color::white());
+    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 300), 200, 0, &Color::random());
 
     pentagon.draw(&mut image);
 
-    let mut cube = gs::Cube::new(&gs::Point::new(500, 500), 200, &Color::white());
+    let mut cube = gs::Cube::new(&gs::Point::new(500, 500), 200, &Color::random());
 
     cube.draw(&mut image);
 
