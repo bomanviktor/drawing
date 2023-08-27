@@ -2,11 +2,17 @@ use crate::random_color::RandomColor;
 use rand::Rng;
 use raster::{Color, Image};
 
+/// The `Drawable` trait defines two methods: `draw` and `color`.
 pub trait Drawable {
     fn draw(&mut self, image: &mut Image);
     fn color(&mut self, color: &Color) -> &mut Self;
 }
 
+/// The `Displayable` trait defines a method `display` that takes in three
+/// parameters: `x`, `y`, and `color`. This trait is used to specify that a type can
+/// be displayed on the screen at a specific position (`x`, `y`) with a specific
+/// color. The `display` method is responsible for actually rendering the object on
+/// the screen.
 pub trait Displayable {
     fn display(&mut self, x: i32, y: i32, color: Color);
 }
@@ -46,7 +52,6 @@ pub struct Line {
 }
 
 impl Line {
-    // Need to figure out implementation of the referenced "Point"
     pub fn new(point_a: &Point, point_b: &Point) -> Line {
         Line {
             point_a: point_a.clone(),
@@ -111,9 +116,9 @@ pub struct Rectangle {
 impl Rectangle {
     pub fn new(point_a: &Point, point_c: &Point) -> Rectangle {
         Rectangle {
-            point_a: Point::new(point_a.x, point_a.y),
+            point_a: point_a.clone(),
             point_b: Point::new(point_c.x, point_a.y),
-            point_c: Point::new(point_c.x, point_c.y),
+            point_c: point_c.clone(),
             point_d: Point::new(point_a.x, point_c.y),
             color: Color::random(),
         }
@@ -136,16 +141,9 @@ impl Circle {
     }
 
     pub fn random(max_width: i32, max_height: i32) -> Circle {
-        let max_range: i32;
-        if max_width >= max_height {
-            max_range = max_width;
-        } else {
-            max_range = max_height;
-        }
-
         Circle {
             center: Point::random(max_width, max_height),
-            radius: rand_i32(max_range),
+            radius: rand_i32(std::cmp::max(max_width, max_height)),
             color: Color::random(),
         }
     }
