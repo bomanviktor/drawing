@@ -180,7 +180,7 @@ impl Cube {
         Cube {
             top_left: p.clone(),
             width,
-            color: Color::random(),
+            color: color.clone(),
         }
     }
 }
@@ -188,9 +188,4 @@ impl Cube {
 // generate a random int in the range of image_width and image_height
 fn rand_i32(max_range: i32) -> i32 {
     rand::thread_rng().gen_range(0..=max_range)
-}
-
-// generate a random u8
-fn rand_u8() -> u8 {
-    rand::thread_rng().gen_range(0..=std::u8::MAX)
 }
