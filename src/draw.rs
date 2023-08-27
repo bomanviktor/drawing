@@ -215,62 +215,28 @@ impl Drawable for Cube {
     fn draw(&mut self, image: &mut Image) {
         let color = &self.color;
 
-        Rectangle::new(
-            &self.top_left,
-            &Point::new(self.top_left.x + self.width, self.top_left.y + self.width),
-        )
-        .color(color)
-        .draw(image);
+        let w = self.width;
+        let a1 = &self.top_left;
+        let a3 = Point::new(a1.x + w, a1.y + w);
+        let b1 = Point::new(a1.x + w / 2, a1.y + w / 2);
+        let b3 = Point::new(a1.x + w + w / 2, a1.y + w + w / 2);
 
-        Rectangle::new(
-            &Point::new(
-                self.top_left.x + self.width / 2,
-                self.top_left.y + self.width / 2,
-            ),
-            &Point::new(
-                self.top_left.x + self.width + self.width / 2,
-                self.top_left.y + self.width + self.width / 2,
-            ),
+        Rectangle::new(a1, &a3).color(color).draw(image);
+        Rectangle::new(&b1, &b3).color(color).draw(image);
+
+        Line::new(&a1, &b1).color(color).draw(image);
+        Line::new(&a3, &b3).color(color).draw(image);
+
+        Line::new(
+            &Point::new(a1.x + w, a1.y),
+            &Point::new(a1.x + w + w / 2, a1.y + w / 2),
         )
         .color(color)
         .draw(image);
 
         Line::new(
-            &Point::new(self.top_left.x, self.top_left.y),
-            &Point::new(
-                self.top_left.x + self.width / 2,
-                self.top_left.y + self.width / 2,
-            ),
-        )
-        .color(color)
-        .draw(image);
-
-        Line::new(
-            &Point::new(self.top_left.x + self.width, self.top_left.y),
-            &Point::new(
-                self.top_left.x + self.width + self.width / 2,
-                self.top_left.y + self.width / 2,
-            ),
-        )
-        .color(color)
-        .draw(image);
-
-        Line::new(
-            &Point::new(self.top_left.x, self.top_left.y + self.width),
-            &Point::new(
-                self.top_left.x + self.width / 2,
-                self.top_left.y + self.width + self.width / 2,
-            ),
-        )
-        .color(color)
-        .draw(image);
-
-        Line::new(
-            &Point::new(self.top_left.x + self.width, self.top_left.y + self.width),
-            &Point::new(
-                self.top_left.x + self.width + self.width / 2,
-                self.top_left.y + self.width + self.width / 2,
-            ),
+            &Point::new(a1.x, a1.y + w),
+            &Point::new(a1.x + w / 2, a1.y + w + w / 2),
         )
         .color(color)
         .draw(image);
