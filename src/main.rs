@@ -17,22 +17,18 @@ fn main() {
     let mut rectangle = gs::Rectangle::new(&gs::Point::new(150, 450), &gs::Point::new(50, 50));
     rectangle.draw(&mut image);
 
-    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 500), 200, 0, &Color::white());
+    let mut pentagon = gs::Pentagon::new(&gs::Point::new(500, 300), 200, 0, &Color::white());
 
     pentagon.draw(&mut image);
 
-    let mut cube = gs::Cube::new(
-        &gs::Point::new(700, 700),
-        &gs::Point::new(750, 750),
-        &gs::Point::new(725, 675),
-    );
+    let mut cube = gs::Cube::new(&gs::Point::new(500, 500), 200, &Color::white());
 
     cube.draw(&mut image);
 
     let mut triangle = gs::Triangle::new(
-        &gs::Point::new(500, 500),
-        &gs::Point::new(250, 700),
-        &gs::Point::new(700, 800),
+        &gs::Point::new(200, 500),
+        &gs::Point::new(150, 700),
+        &gs::Point::new(400, 800),
     );
     triangle.draw(&mut image);
 

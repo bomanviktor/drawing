@@ -169,32 +169,16 @@ impl Pentagon {
 }
 
 pub struct Cube {
-    pub front: Rectangle,
-    pub rear: Rectangle,
-    pub top_left: Line,
-    pub top_right: Line,
-    pub bottom_right: Line,
-    pub bottom_left: Line,
+    pub top_left: Point,
+    pub width: i32,
     pub color: Color,
 }
 
 impl Cube {
-    pub fn new(point_a: &Point, point_b: &Point, point_c: &Point) -> Cube {
-        let front = Rectangle::new(point_a, point_b);
-        let rear = Rectangle::new(
-            point_c,
-            &Point::new(
-                (point_b.x - point_c.x) + point_b.x,
-                (point_b.y - point_a.y) + point_c.y,
-            ),
-        );
+    pub fn new(p: &Point, width: i32, color: &Color) -> Cube {
         Cube {
-            top_left: Line::new(&front.point_a, &rear.point_a),
-            top_right: Line::new(&front.point_b, &rear.point_b),
-            bottom_right: Line::new(&front.point_c, &rear.point_c),
-            bottom_left: Line::new(&front.point_d, &rear.point_d),
-            front,
-            rear,
+            top_left: p.clone(),
+            width,
             color: Color::white(),
         }
     }

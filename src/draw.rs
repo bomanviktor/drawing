@@ -215,12 +215,65 @@ impl Drawable for Cube {
     fn draw(&mut self, image: &mut Image) {
         let color = &self.color;
 
-        self.rear.color(color).draw(image);
-        self.top_left.color(color).draw(image);
-        self.top_right.color(color).draw(image);
-        self.bottom_left.color(&Color::red()).draw(image);
-        self.bottom_right.color(&Color::blue()).draw(image);
-        self.front.color(color).draw(image);
+        Rectangle::new(
+            &self.top_left,
+            &Point::new(self.top_left.x + self.width, self.top_left.y + self.width),
+        )
+        .color(color)
+        .draw(image);
+
+        Rectangle::new(
+            &Point::new(
+                self.top_left.x + self.width / 2,
+                self.top_left.y + self.width / 2,
+            ),
+            &Point::new(
+                self.top_left.x + self.width + self.width / 2,
+                self.top_left.y + self.width + self.width / 2,
+            ),
+        )
+        .color(color)
+        .draw(image);
+
+        Line::new(
+            &Point::new(self.top_left.x, self.top_left.y),
+            &Point::new(
+                self.top_left.x + self.width / 2,
+                self.top_left.y + self.width / 2,
+            ),
+        )
+        .color(color)
+        .draw(image);
+
+        Line::new(
+            &Point::new(self.top_left.x + self.width, self.top_left.y),
+            &Point::new(
+                self.top_left.x + self.width + self.width / 2,
+                self.top_left.y + self.width / 2,
+            ),
+        )
+        .color(color)
+        .draw(image);
+
+        Line::new(
+            &Point::new(self.top_left.x, self.top_left.y + self.width),
+            &Point::new(
+                self.top_left.x + self.width / 2,
+                self.top_left.y + self.width + self.width / 2,
+            ),
+        )
+        .color(color)
+        .draw(image);
+
+        Line::new(
+            &Point::new(self.top_left.x + self.width, self.top_left.y + self.width),
+            &Point::new(
+                self.top_left.x + self.width + self.width / 2,
+                self.top_left.y + self.width + self.width / 2,
+            ),
+        )
+        .color(color)
+        .draw(image);
     }
     fn color(&mut self, color: &Color) -> &mut Self {
         self.color = color.clone();
